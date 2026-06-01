@@ -1,7 +1,3 @@
-import java.beans.Transient;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 public class BaggageFeeCalculatorTest {
@@ -25,4 +21,23 @@ public class BaggageFeeCalculatorTest {
         double fee = calculator.calculateFee(20.0, 1, 1L);
         assertThat(fee).isEqualTo(30.0);
     }
+
+    //Prueba de Exceso de peso
+    @Test
+    void shouldCalculateExcessWeightFee() {
+        when(passengerService.isFrequentFlyer(1L)).thenReturn(false);
+        double fee = calculator.calculateFee(25.0, 1, 1L);
+        assertThat(fee).isEqualTo(80.0); 
+    }
+
+    //Prueba de Beneficio VIP
+    @Test
+    void shouldCalculateVipBenefitForOneBag() {
+        when(passengerService.isFrequentFlyer(1L)).thenReturn(true);
+        double fee = calculator.calculateFee(15.0, 1, 1L);
+        assertThat(fee).isEqualTo(0.0); 
+    } 
+    
+
+
 }
