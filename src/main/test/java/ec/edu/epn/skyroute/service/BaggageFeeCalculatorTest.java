@@ -20,7 +20,7 @@ public class BaggageFeeCalculatorTest {
             .isThrownBy(() -> calculator.calculateFee(0.0, 1, 1L));
     }
 
-    //Prueba de Equipaje estándar
+    //1. Prueba de Equipaje estándar
     @Test
     void shouldCalculateStandardBaggageFee() {
         when(passengerService.isFrequentFlyer(1L)).thenReturn(false);
@@ -28,7 +28,7 @@ public class BaggageFeeCalculatorTest {
         assertThat(fee).isEqualTo(30.0);
     }
 
-    //Prueba de Exceso de peso
+    //2. Prueba de Exceso de peso
     @Test
     void shouldCalculateExcessWeightFee() {
         when(passengerService.isFrequentFlyer(1L)).thenReturn(false);
@@ -36,7 +36,7 @@ public class BaggageFeeCalculatorTest {
         assertThat(fee).isEqualTo(80.0); 
     }
 
-    //Prueba de Beneficio VIP
+    //3. Prueba de Beneficio VIP
     @Test
     void shouldCalculateVipBenefitForOneBag() {
         when(passengerService.isFrequentFlyer(1L)).thenReturn(true);
@@ -44,12 +44,26 @@ public class BaggageFeeCalculatorTest {
         assertThat(fee).isEqualTo(0.0); 
     } 
     
-    //Prueba caso limite VIP
+    //4. Prueba caso limite VIP
     @Test
     void shouldCalculateVipBenefitForTwoBags() {
         when(passengerService.isFrequentFlyer(1L)).thenReturn(true);
         double fee = calculator.calculateFee(15.0, 2, 1L);
         assertThat(fee).isEqualTo(30.0); 
+    }
+
+    //5. Prueba de validación de excepción cuando el peso (weight = negativo)
+    @Test
+    void shouldThrow_whenWeightIsNegative() {
+        assertThatIllegalArgumentException()
+            .isThrownBy(() -> calculator.calculateFee(-5.0, 1, 1L));
+    }
+
+    //Prueba extra cuando la cantidad de maletas es menor a 1
+    @Test
+    void shouldThrow_whenBagCountIsLessThanOne() {
+        assertThatIllegalArgumentException()
+            .isThrownBy(() -> calculator.calculateFee(20.0, 0, 1L));
     }
 
 
