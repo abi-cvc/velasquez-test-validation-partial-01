@@ -52,7 +52,16 @@ public class BaggageFeeCalculator {
 
         if (passengerService.isFrequentFlyer(passengerId) && weight <= 23.0 && bagCount == 2) {
             return 30.0; // Beneficio VIP: primera maleta gratis y la segunda con cobro normal
-        }       
+        }    
+        
+        if (weight > 23.0) {
+            return 30.0 + 50.0; // Tarifa base + exceso de peso
+        }
+
+        if (weight <= 23.0) {
+            return 30.0 * bagCount; // Tarifa base por cada maleta
+        }
+        
         return 0.0;
     }
 }
