@@ -1,3 +1,9 @@
+package ec.edu.epn.skyroute.service;
+import org.junit.jupiter.api.Test;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.mockito.Mockito.when;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 public class BaggageFeeCalculatorTest {
@@ -38,6 +44,13 @@ public class BaggageFeeCalculatorTest {
         assertThat(fee).isEqualTo(0.0); 
     } 
     
+    //Prueba caso limite VIP cuando el pasajero tiene 2 maletas con 15kg cada una, es un pasajero VIP y se quiere un resultado esperado de $30, la primera gratis y la 2da maleta de cobro normal
+    @Test
+    void shouldCalculateVipBenefitForTwoBags() {
+        when(passengerService.isFrequentFlyer(1L)).thenReturn(true);
+        double fee = calculator.calculateFee(15.0, 2, 1L);
+        assertThat(fee).isEqualTo(30.0); 
+    }
 
 
 }
