@@ -35,6 +35,9 @@ public class BaggageFeeCalculator {
      */
     public double calculateFee(double weight, int bagCount, Long passengerId) {
         // TODO: Implementar lógica de negocio y validación de excepciones
+        if (passengerId == null) {
+            throw new IllegalArgumentException("El ID del pasajero no puede ser nulo");
+        }
         return 0.0;
     }
 }
