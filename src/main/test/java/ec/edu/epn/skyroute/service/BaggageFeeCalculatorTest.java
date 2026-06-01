@@ -44,7 +44,7 @@ public class BaggageFeeCalculatorTest {
         assertThat(fee).isEqualTo(0.0); 
     } 
     
-    //Prueba caso limite VIP cuando el pasajero tiene 2 maletas con 15kg cada una, es un pasajero VIP y se quiere un resultado esperado de $30, la primera gratis y la 2da maleta de cobro normal
+    //Prueba caso limite VIP
     @Test
     void shouldCalculateVipBenefitForTwoBags() {
         when(passengerService.isFrequentFlyer(1L)).thenReturn(true);
