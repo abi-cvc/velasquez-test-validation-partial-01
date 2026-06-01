@@ -38,6 +38,23 @@ public class BaggageFeeCalculator {
         if (passengerId == null) {
             throw new IllegalArgumentException("El ID del pasajero no puede ser nulo");
         }
+
+        if (weight <= 0) {
+            throw new IllegalArgumentException("El peso debe ser mayor que cero");
+        }
+        if (bagCount < 1) {
+            throw new IllegalArgumentException("La cantidad de maletas debe ser al menos 1");
+        }
+
+        if (passengerService.isFrequentFlyer(passengerId) && weight <= 23.0 && bagCount == 1) {
+            return 0.0; // Beneficio VIP: primera maleta gratis
+        }
+
+        if (passengerService.isFrequentFlyer(passengerId) && weight <= 23.0 && bagCount == 2) {
+            return 30.0; // Beneficio VIP: primera maleta gratis y la segunda con cobro normal
+        }
+    
+            
         return 0.0;
     }
 }
